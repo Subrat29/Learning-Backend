@@ -12,7 +12,8 @@ I am currently learning backend development in JavaScript through the **Chai aur
 ## 📂 Lectures
 - **Lecture 1:** Introduction, basics of backend and course flow.
 - **Lecture 2:** Simple REST API and deployment.
-- **Lecture 3:** Learn to connect frontend with backend, cors and proxy.  
+- **Lecture 3:** Learn to connect frontend with backend, cors and proxy.
+- **Lecture 4:** Learn Models, e.g: Todos, Ecommerce, Hospital Management  
 - (Add more as I progress)
 
 ## 📚 Resources
