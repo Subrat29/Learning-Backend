@@ -4,15 +4,6 @@ dotenv.config({ path: './.env' });
 import connectDB from "./db/index.js";
 import { app } from './app.js'
 
-
-console.log("Environment Variables Loaded:");
-console.log("PORT: ", process.env.PORT);
-console.log("CLOUDINARY_CLOUD_NAME: ", process.env.CLOUDINARY_CLOUD_NAME);
-console.log("CLOUDINARY_API_KEY: ", process.env.CLOUDINARY_API_KEY);
-console.log("CLOUDINARY_API_SECRET: ", process.env.CLOUDINARY_API_SECRET);
-
-
-
 connectDB()
     .then(() => {
         app.listen(process.env.PORT || 8000, () => {
