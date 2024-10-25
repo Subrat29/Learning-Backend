@@ -67,7 +67,7 @@ userSchema.methods.isPasswordCorrect = async function (password) {
 }
 
 userSchema.methods.generateAccessToken = async function () {
-    return jwt.sign(
+    const response =  jwt.sign(
         {
             _id: this._id,
             email: this.email,
@@ -79,6 +79,8 @@ userSchema.methods.generateAccessToken = async function () {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY
         }
     )
+    // console.log("generateAccessToken/response:: ", response)
+    return response
 }
 
 userSchema.methods.generateRefreshToken = async function () {

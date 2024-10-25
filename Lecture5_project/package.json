@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
   },
-  "author": "",
+  "author": "Subrat Yadav",
   "license": "ISC",
   "description": "",
   "dependencies": {

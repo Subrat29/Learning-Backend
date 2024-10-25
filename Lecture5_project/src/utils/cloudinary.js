@@ -16,9 +16,9 @@ const uploadOnCloudinary = async (localFilePath) => {
 
         if (!localFilePath) return null;
 
-        console.log("At Upload Time/CLOUDINARY_CLOUD_NAME: ", process.env.CLOUDINARY_CLOUD_NAME);
-        console.log("At Upload Time/CLOUDINARY_API_KEY: ", process.env.CLOUDINARY_API_KEY);
-        console.log("At Upload Time/CLOUDINARY_API_SECRET: ", process.env.CLOUDINARY_API_SECRET);
+        // console.log("At Upload Time/CLOUDINARY_CLOUD_NAME: ", process.env.CLOUDINARY_CLOUD_NAME);
+        // console.log("At Upload Time/CLOUDINARY_API_KEY: ", process.env.CLOUDINARY_API_KEY);
+        // console.log("At Upload Time/CLOUDINARY_API_SECRET: ", process.env.CLOUDINARY_API_SECRET);
 
         // Upload the file on cloudinary
         const response = await cloudinary.uploader.upload(localFilePath, {
