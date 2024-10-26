@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js"
 import { User } from "../models/user.model.js"
-import { uploadOnCloudinary } from "../utils/cloudinary.js"
+import { uploadOnCloudinary, deleteFromCloudinary } from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 
@@ -76,6 +76,8 @@ const registerUser = asyncHandler(async (req, res) => {
     if (!avatar) {
         throw new ApiError(400, "Avatar file is required")
     }
+
+    // console.log("avatar = : ", avatar);
 
     const user = await User.create({
         fullName,
@@ -320,6 +322,17 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Error while uploading Avatar on cloudinary")
     }
 
+    //check if user already has avatar, then delete it from cloudinary
+    let responseOfDelete = null
+    if (req.user?.avatar) {
+        const avatarPublicId = req.user.avatar.split("/").pop()?.split(".")[0]
+        responseOfDelete = await deleteFromCloudinary(avatarPublicId)
+    }
+
+    if (responseOfDelete !== "ok") {
+        throw new ApiError(400, "Error while deleting Avatar from cloudinary")
+    }
+
     const user = await User.findByIdAndUpdate(
         req.user?._id,
         {
@@ -346,6 +359,17 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     const newCoverImage = await uploadOnCloudinary(newCoverImageLocalPath)
     if (!newCoverImage.url) {
         throw new ApiError(400, "Error while uploading CoverImage on cloudinary")
+    }
+
+    //check if user already has coverImage, then delete it from cloudinary
+    let responseOfDelete = null
+    if (req.user?.coverImage) {
+        const coverImagePublicId = req.user.coverImage.split("/").pop()?.split(".")[0]
+        responseOfDelete = await deleteFromCloudinary(coverImagePublicId)
+    }
+
+    if (responseOfDelete !== "ok") {
+        throw new ApiError(400, "Error while deleting CoverImage from cloudinary")
     }
 
     const user = await User.findByIdAndUpdate(

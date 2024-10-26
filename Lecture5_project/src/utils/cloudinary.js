@@ -8,17 +8,13 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-console.log("Cloudinary Config: ", cloudinary.config());
+// console.log("Cloudinary Config: ", cloudinary.config());
 
 const uploadOnCloudinary = async (localFilePath) => {
     try {
         console.log("Cloudinary.js/localFilePath: ", localFilePath);
 
         if (!localFilePath) return null;
-
-        // console.log("At Upload Time/CLOUDINARY_CLOUD_NAME: ", process.env.CLOUDINARY_CLOUD_NAME);
-        // console.log("At Upload Time/CLOUDINARY_API_KEY: ", process.env.CLOUDINARY_API_KEY);
-        // console.log("At Upload Time/CLOUDINARY_API_SECRET: ", process.env.CLOUDINARY_API_SECRET);
 
         // Upload the file on cloudinary
         const response = await cloudinary.uploader.upload(localFilePath, {
@@ -33,10 +29,26 @@ const uploadOnCloudinary = async (localFilePath) => {
         return response;
 
     } catch (error) {
-        console.log("Error in cloudinary.js: ", error);
+        console.log("Error in uploading file on cloudinary: ", error);
         fs.unlinkSync(localFilePath); // Remove local file after failure
         return null;
     }
 };
 
-export { uploadOnCloudinary };
+const deleteFromCloudinary = async (publicId) => {
+    try {
+        // Delete the file from cloudinary
+        const response = await cloudinary.uploader.destroy(publicId);
+
+        // File has been deleted successfully
+        console.log("File deleted from cloudinary: ", response.result);
+
+        return response;
+
+    } catch (error) {
+        console.log("Error in deleting file from cloudinary: ", error);
+        return null;
+    }
+};
+
+export { uploadOnCloudinary, deleteFromCloudinary };
